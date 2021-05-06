@@ -11,8 +11,8 @@ import torch.nn as nn
 from torchvision.utils import save_image
 
 
-logit_criterion = nn.BCEWithLogitsLoss(reduction='sum')
-prob_criterion = nn.CrossEntropyLoss(reduction='sum')
+logit_criterion = nn.BCEWithLogitsLoss(reduction='mean')
+prob_criterion = nn.CrossEntropyLoss(reduction='mean')
 
 
 def model_train(model, real_images, real_labels, d_optimizer, g_optimizer, config, info, device):
@@ -23,13 +23,13 @@ def model_train(model, real_images, real_labels, d_optimizer, g_optimizer, confi
     fake_logits = model.discriminate(fake_images, real_labels)
 
     d_optimizer.zero_grad()
-    d_loss = logit_criterion(real_logits, torch.ones_like(real_logits) - 0.001) + \
-             logit_criterion(fake_logits, torch.zeros_like(fake_logits) + 0.001)
+    d_loss = logit_criterion(real_logits, torch.ones_like(real_logits) - 0.1) + \
+             logit_criterion(fake_logits, torch.zeros_like(fake_logits) + 0.1)
     d_loss.backward(retain_graph=True)
     d_optimizer.step()
 
     g_optimizer.zero_grad()
-    g_loss = logit_criterion(fake_logits, torch.ones_like(real_logits) - 0.001)
+    g_loss = logit_criterion(fake_logits, torch.ones_like(real_logits) - 0.1)
     g_loss.backward()
     g_optimizer.step()
 
