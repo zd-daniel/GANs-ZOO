@@ -35,8 +35,8 @@ def parse_arg():
     parser.add_argument('--channels', default="32, 64", type=str,
                         help='channels for each layer')
     parser.add_argument('--batch_size', type=int, default=16, help='batch size')
-    parser.add_argument('--g_lr', type=float, default=0.001, help='learning rate for generator')
-    parser.add_argument('--d_lr', type=float, default=0.001, help='learning rate for discriminator')
+    parser.add_argument('--g_lr', type=float, default=0.0001, help='learning rate for generator')
+    parser.add_argument('--d_lr', type=float, default=0.0004, help='learning rate for discriminator')
     parser.add_argument('--lr_decay', type=float, default=1., help='decay')
     parser.add_argument('--beta1', type=float, default=0.5, help='beta1')
     parser.add_argument('--beta2', type=float, default=0.9, help='beta2')
